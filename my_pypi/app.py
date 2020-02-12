@@ -28,9 +28,11 @@ def register_blueprints():
     from my_pypi.views import home_views
     from my_pypi.views import package_views
     from my_pypi.views import cms_views
+    from my_pypi.views import account_views
 
     app.register_blueprint(package_views.blueprint)
     app.register_blueprint(home_views.blueprint)
+    app.register_blueprint(account_views.blueprint)
     app.register_blueprint(cms_views.blueprint)
 
 
