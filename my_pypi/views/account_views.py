@@ -26,7 +26,7 @@ def index():
 @response(template_file='account/register.html')
 def register_get():
     vm = RegisterViewModel()
-    if vm.user:
+    if vm.user_id:
         return flask.redirect('/account')
     return vm.to_dict()
 
