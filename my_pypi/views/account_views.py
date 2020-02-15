@@ -2,16 +2,22 @@ import flask
 
 from my_pypi.infrastructure.view_modifiers import response
 from my_pypi.services import user_service
+from my_pypi.infrastructure import cookie_auth
+from my_pypi.infrastructure import request_dict
+from my_pypi.viewmodels.account.index_viewmodel import IndexViewModel
+from my_pypi.viewmodels.account.register_viewmodel import RegisterViewModel
+from my_pypi.viewmodels.account.login_viewmodel import LoginViewModel
+
 blueprint = flask.Blueprint('account', __name__, template_folder='templates')
 
-
 # ################### INDEX #################################
-
-
 @blueprint.route('/account')
 @response(template_file='account/index.html')
 def index():
-    return {}
+    vm = IndexViewModel()
+    if not vm.user:
+        return flask.redirect('/account/login')
+    return vm.to_dict()
 
 
 # ################### REGISTER #################################
@@ -19,36 +25,27 @@ def index():
 @blueprint.route('/account/register', methods=['GET'])
 @response(template_file='account/register.html')
 def register_get():
-    return {}
-
+    vm = RegisterViewModel()
+    if vm.user:
+        return flask.redirect('/account')
+    return vm.to_dict()
 
 @blueprint.route('/account/register', methods=['POST'])
 @response(template_file='account/register.html')
 def register_post():
-    r = flask.request
+    vm = RegisterViewModel()
+    vm.validate()
+    if vm.error:
+        return vm.to_dict()    
 
-    name = r.form.get('name')
-    email = r.form.get('email', '').lower().strip()
-    password = r.form.get('password').lower().strip()
-    
-    if not name or not email or not password:
-        return {
-            'name': name,
-            'password': password,
-            'email': email,
-            'error': "Some required fields are missing."
-        }
-
-    user = user_service.create_user(name, email, password)
+    user = user_service.create_user(vm.name, vm.email, vm.password)
     if not user:
-        return {
-            'name': name,
-            'password': password,
-            'email': email,
-            'error': "A user with that email already exists."
-        }
-
-    return flask.redirect('/account')
+        vm.error = 'The account could not be created'
+        return vm.to_dict()
+        
+    response = flask.redirect('/account')
+    cookie_auth.set_auth(response, user.id)
+    return response
 
 
 # ################### LOGIN #################################
@@ -56,17 +53,34 @@ def register_post():
 @blueprint.route('/account/login', methods=['GET'])
 @response(template_file='account/login.html')
 def login_get():
-    return {}
-
+    vm = LoginViewModel()
+    if vm.user_id:
+        return flask.redirect('/account')
+    return vm.to_dict()
 
 @blueprint.route('/account/login', methods=['POST'])
 @response(template_file='account/login.html')
 def login_post():
-    return {}
+    vm = LoginViewModel()
+    vm.validate()
+
+    if vm.error:
+        return vm.to_dict()
+    
+    user = user_service.login_user(vm.email, vm.password)
+    if not user:
+        vm.error = "The account does not exist or the password is wrong."
+        return vm.to_dict()
+
+    response = flask.redirect('/account')
+    cookie_auth.set_auth(response, user.id)
+    return response
 
 
 # ################### LOGOUT #################################
 
 @blueprint.route('/account/logout')
 def logout():
-    return {}
+    response = flask.redirect('/')
+    cookie_auth.logout(response)
+    return response
