@@ -1,0 +1,13 @@
+werkzeug
+flask
+sqlalchemy
+
+progressbar
+python-dateutil
+alembic
+passlib
+
+pytest
+pytest-cov
+webtest
+pytest-clarity
