@@ -1,6 +1,7 @@
 werkzeug
 flask
 sqlalchemy
+psycopg2-binary
 
 progressbar
 python-dateutil

@@ -1,3 +1,4 @@
+
 import json
 import os
 import sys
@@ -10,14 +11,17 @@ from dateutil.parser import parse
 sys.path.insert(0, os.path.abspath(os.path.join(
     os.path.dirname(__file__), "..", "..")))
 
-from my_pypi.infrastructure.num_convert import try_int
-import my_pypi.data.db_session as db_session
-from my_pypi.data.languages import ProgrammingLanguage
-from my_pypi.data.licenses import License
-from my_pypi.data.maintainers import Maintainer
-from my_pypi.data.package import Package
-from my_pypi.data.releases import Release
 from my_pypi.data.users import User
+from my_pypi.data.releases import Release
+from my_pypi.data.package import Package
+from my_pypi.data.maintainers import Maintainer
+from my_pypi.data.licenses import License
+from my_pypi.data.languages import ProgrammingLanguage
+import my_pypi.data.db_session as db_session
+from my_pypi.utils.num_convert import try_int
+from my_pypi.config import DevelopmentConfig
+
+
 
 
 def main():
@@ -142,7 +146,8 @@ def do_import_packages(file_data: List[dict], user_lookup: Dict[str, User]):
             load_package(p, user_lookup)
             pbar.update(idx)
         except Exception as x:
-            errored_packages.append((p, " *** Errored out for package {}, {}".format(p.get('package_name'), x)))
+            errored_packages.append(
+                (p, " *** Errored out for package {}, {}".format(p.get('package_name'), x)))
             raise
     sys.stderr.flush()
     sys.stdout.flush()
@@ -153,7 +158,8 @@ def do_import_packages(file_data: List[dict], user_lookup: Dict[str, User]):
 
 
 def do_load_files() -> List[dict]:
-    data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../data/pypi-top-100'))
+    data_path = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), '../../data/pypi-top-100'))
     print("Loading files from {}".format(data_path))
     files = get_file_names(data_path)
     print("Found {:,} files, loading ...".format(len(files)), flush=True)
@@ -176,8 +182,10 @@ def find_users(data: List[dict]) -> dict:
     pbar = progressbar.ProgressBar(maxval=len(data)).start()
     for idx, p in enumerate(data):
         info = p.get('info')
-        found_users.update(get_email_and_name_from_text(info.get('author'), info.get('author_email')))
-        found_users.update(get_email_and_name_from_text(info.get('maintainer'), info.get('maintainer_email')))
+        found_users.update(get_email_and_name_from_text(
+            info.get('author'), info.get('author_email')))
+        found_users.update(get_email_and_name_from_text(
+            info.get('maintainer'), info.get('maintainer_email')))
         pbar.update(idx)
 
     sys.stderr.flush()
@@ -237,7 +245,8 @@ def load_package(data: dict, user_lookup: Dict[str, User]):
         if releases:
             p.created_date = releases[0].created_date
 
-        maintainers_lookup = get_email_and_name_from_text(info.get('maintainer'), info.get('maintainer_email'))
+        maintainers_lookup = get_email_and_name_from_text(
+            info.get('maintainer'), info.get('maintainer_email'))
         maintainers = []
         for email, name in maintainers_lookup.items():
             user = user_lookup.get(email)
@@ -339,10 +348,7 @@ def make_version_num(version_text):
 
 
 def init_db():
-    top_folder = os.path.dirname(__file__)
-    rel_file = os.path.join('..', 'db', 'pypi.sqlite')
-    db_file = os.path.abspath(os.path.join(top_folder, rel_file))
-    db_session.global_init(db_file)
+    db_session.global_init(DevelopmentConfig.SQLALCHEMY_DATABASE_URI, True)#TODO: Make it better
 
 
 def get_file_names(data_path: str) -> List[str]:

@@ -1,9 +1,11 @@
 import os
 import sys
 import flask
+
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, folder)
 
+from my_pypi.config import DevelopmentConfig 
 import my_pypi.data.db_session as db_session
 
 app = flask.Flask(__name__)
@@ -11,17 +13,9 @@ app = flask.Flask(__name__)
 
 def main():
     register_blueprints()
-    setup_db()
-    app.run(debug=True)
-
-
-def setup_db():
-    db_file = os.path.join(
-        os.path.dirname(__file__),
-        'db',
-        'pypi.sqlite')
-
-    db_session.global_init(db_file)
+    app.config.from_object(DevelopmentConfig)
+    db_session.global_init(app.config['SQLALCHEMY_DATABASE_URI'], False)
+    app.run(app.run(port=5000, host="0.0.0.0", use_reloader=True))
 
 
 def register_blueprints():

@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(
 import my_pypi.data.db_session as db_session
 from my_pypi.data.package import Package
 from my_pypi.data.releases import Release
+from my_pypi.config import DevelopmentConfig
 
 def main():
     init_db()
@@ -44,10 +45,7 @@ def insert_a_package():
 
 
 def init_db():
-    top_folder = os.path.dirname(__file__)
-    rel_file = os.path.join('..', 'db', 'pypi.sqlite')
-    db_file = os.path.abspath(os.path.join(top_folder, rel_file))
-    db_session.global_init(db_file)
+    db_session.global_init(DevelopmentConfig.SQLALCHEMY_DATABASE_URI)
 
 
 if __name__ == '__main__':

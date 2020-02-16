@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  my_pypi:
+    build: ./app
+    command: python my_pypi/app.py
+    volumes:
+      - ./app:/usr/src/app/
+    ports:
+      - 5000:5000
+    env_file:
+      - ./.env.dev
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=my_pypi
+      - POSTGRES_PASSWORD=my_pypi
+      - POSTGRES_DB=my_pypi_dev
+volumes:
+  postgres_data:
