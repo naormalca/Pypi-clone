@@ -13,8 +13,9 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
-  - docker-compose up -d --build
+  - docker-compose build
 script:
-  - ls -l
+  - docker-compose up
+  - docker-compose exec my_pypi pytest app/_all_tests.py
 after_script:
   - docker-compose down
