@@ -1,6 +1,7 @@
 My-Pypi clone
 ===
-My clone to Pypi - [Python Packages Index](https://pypi.org/) 
+My clone to Pypi - [Python Packages Index](https://pypi.org/).
+
 Stack: Python, Flask, SqlAlchemy(also alembic for migration) and postgres.
 
 
