@@ -31,6 +31,7 @@ Run the containers
 > docker-compose up
 
 Go to 127.0.0.1:5000 :)
+
 Running the tests
 ---
 Currently the project have few simple tests, to run them enter to the container and run them with pytests as follow:
