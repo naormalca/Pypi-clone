@@ -16,6 +16,6 @@ before_script:
   - docker-compose build
 script:
   - docker-compose up -d
-  - docker-compose exec my_pypi pytest app/tests/_all_tests.py
-after_script:
   - docker-compose down
+  - docker-compose exec my_pypi pytest app/tests/_all_tests.py
+  
