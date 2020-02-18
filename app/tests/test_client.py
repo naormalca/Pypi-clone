@@ -23,6 +23,5 @@ def client():
         # print(x)
         pass
 
-    my_pypi.app.setup_db()
 
     yield client
