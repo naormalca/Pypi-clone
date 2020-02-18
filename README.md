@@ -1,4 +1,4 @@
-My-Pypi clone
+My-Pypi clone [![Build Status](https://travis-ci.com/naormalca/Pypi-clone.svg?branch=master)](https://travis-ci.com/naormalca/Pypi-clone)
 ===
 My clone to Pypi - [Python Packages Index](https://pypi.org/).
 
