@@ -7,7 +7,7 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = "sqlite://"
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite://")
 
 
 class DevelopmentConfig(Config):

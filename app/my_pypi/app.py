@@ -13,9 +13,9 @@ app = flask.Flask(__name__)
 
 def main():
     register_blueprints()
-    app.config.from_object(DevelopmentConfig)
+    app.config.from_object('config.' + os.getenv('FLASK_CONFIG'))
     db_session.global_init(app.config['SQLALCHEMY_DATABASE_URI'], False)
-    app.run(app.run(port=5000, host="0.0.0.0", use_reloader=True))
+    app.run(port=5000, host="0.0.0.0", use_reloader=True)
 
 
 def register_blueprints():

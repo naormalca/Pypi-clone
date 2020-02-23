@@ -7,7 +7,7 @@ services:
     expose:
       - 5000
     env_file:
-      - ./.env.dev
+      - ./.env.prod
     depends_on:
       - db
   db:
