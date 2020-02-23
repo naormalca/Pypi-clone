@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 import my_pypi.data.db_session as db_session
 from my_pypi.data.users import User
@@ -42,3 +42,13 @@ def login_user(email: str, password: str) -> Optional[User]:
         return None
     
     return user
+
+def get_new_users(limit = 10) -> List[User]:
+    session = db_session.create_session()
+
+    users = session.query(User).order_by(User.created_date.desc()) \
+        .limit(limit).all()
+    
+    session.close()
+
+    return users
