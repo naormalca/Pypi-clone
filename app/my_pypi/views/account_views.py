@@ -7,6 +7,7 @@ from my_pypi.infrastructure import request_dict
 from my_pypi.viewmodels.account.index_viewmodel import IndexViewModel
 from my_pypi.viewmodels.account.register_viewmodel import RegisterViewModel
 from my_pypi.viewmodels.account.login_viewmodel import LoginViewModel
+from my_pypi.viewmodels.shared.viewmodelbase import ViewModelBase
 
 blueprint = flask.Blueprint('account', __name__, template_folder='templates')
 
@@ -84,3 +85,15 @@ def logout():
     response = flask.redirect('/')
     cookie_auth.logout(response)
     return response
+
+
+#################### USER-PAGE #################################
+
+@blueprint.route('/account/<user_id>', methods=['GET'])
+@response(template_file='account/userpage.html')
+def userpage(user_id: str):
+    vm = ViewModelBase()
+    vm.user_details = user_service.find_user_by_id(user_id)
+    if not vm.user_details:
+        return flask.abort(404)
+    return vm.to_dict()

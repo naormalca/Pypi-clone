@@ -52,3 +52,13 @@ def get_new_users(limit = 10) -> List[User]:
     session.close()
 
     return users
+
+def get_latest_logged(limit = 10) -> List[User]:
+    session = db_session.create_session()
+
+    users = session.query(User).order_by(User.last_login.desc()) \
+        .limit(limit).all()
+    
+    session.close()
+
+    return users
