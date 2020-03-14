@@ -9,7 +9,6 @@ __factory = None
 
 def global_init(db_url: str, drop_all: bool):#TODO: Make it better
     global __factory
-
     if __factory:
         return
 

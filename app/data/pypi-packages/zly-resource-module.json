@@ -1,0 +1,106 @@
+{
+    "info": {
+        "author": "",
+        "author_email": "",
+        "bugtrack_url": null,
+        "classifiers": ["License :: OSI Approved :: MIT License", "Operating System :: OS Independent", "Programming Language :: Python :: 3"],
+        "description": "#######################\nDingTalk Sdk for Python\n#######################\n.. image:: https://travis-ci.org/007gzs/dingtalk-sdk.svg?branch=master\n       :target: https://travis-ci.org/007gzs/dingtalk-sdk\n.. image:: https://img.shields.io/pypi/v/dingtalk-sdk.svg\n       :target: https://pypi.org/project/dingtalk-sdk\n\n\u9489\u9489\u5f00\u653e\u5e73\u53f0\u7b2c\u4e09\u65b9 Python SDK\u3002\n`\u3010\u9605\u8bfb\u6587\u6863\u3011 <http://dingtalk-sdk.readthedocs.io/zh_CN/latest/>`_\u3002\n\n********\n\u529f\u80fd\u7279\u6027\n********\n+ \u4f01\u4e1a\u5185\u90e8\u5f00\u53d1\u63a5\u5165api\n+ \u5e94\u7528\u670d\u52a1\u5546\uff08ISV\uff09\u63a5\u5165api\n\n********\n\u5b89\u88c5\n********\n\n\u76ee\u524d dingtalk-sdk \u652f\u6301\u7684 Python \u73af\u5883\u6709 2.7, 3.4, 3.5, 3.6 \u548c pypy\u3002\n\ndingtalk-sdk \u6d88\u606f\u52a0\u89e3\u5bc6\u540c\u65f6\u517c\u5bb9 cryptography \u548c PyCrypto, \u4f18\u5148\u4f7f\u7528 cryptography \u5e93\u3002\n\u53ef\u5148\u81ea\u884c\u5b89\u88c5 cryptography \u6216\u8005 PyCrypto \u5e93::\n\n#cryptography python\u7684\u4e00\u4e2a\u52a0\u5bc6\u65b9\u6cd5\n\n    # \u5b89\u88c5 cryptography\n    pip install cryptography>=0.8.2\n    # \u6216\u8005\u5b89\u88c5 PyCrypto\n    pip install pycrypto>=2.6.1\n\n\u4e3a\u4e86\u7b80\u5316\u5b89\u88c5\u8fc7\u7a0b\uff0c\u63a8\u8350\u4f7f\u7528 pip \u8fdb\u884c\u5b89\u88c5\n\n.. code-block:: bash\n\n    pip install dingtalk-sdk\n    # with cryptography\n    pip install dingtalk-sdk[cryptography]\n    # with pycrypto\n    pip install dingtalk-sdk[pycrypto]\n\n\u5347\u7ea7 dingtalk-sdk \u5230\u65b0\u7248\u672c::\n\n    pip install -U dingtalk-sdk\n\n****************\n\u4f7f\u7528\u793a\u4f8b\n****************\n\ndjango \u793a\u4f8b https://github.com/007gzs/dingtalk-django-example\n\n\n",
+        "description_content_type": "",
+        "docs_url": null,
+        "download_url": "",
+        "downloads": {
+            "last_day": -1,
+            "last_month": -1,
+            "last_week": -1
+        },
+        "home_page": "",
+        "keywords": "dingding,ding,dtalk,dingtalk,SDK",
+        "license": "MIT",
+        "maintainer": "",
+        "maintainer_email": "",
+        "name": "zly-resource-module",
+        "package_url": "https://pypi.org/project/zly-resource-module/",
+        "platform": "",
+        "project_url": "https://pypi.org/project/zly-resource-module/",
+        "project_urls": null,
+        "release_url": "https://pypi.org/project/zly-resource-module/1.0.0/",
+        "requires_dist": ["six (>=1.8.0)", "requests (>=2.4.3)", "optionaldict (>=0.1.0)", "flake8 (>=3.4.1)", "Flask (>=1.1.1)", "Flask-Bootstrap (>=3.3.7.1)", "Flask-Caching (>=1.8.0)", "Flask-Cors (>=3.0.8)", "Flask-Login (>=0.5.0)", "Flask-Mail (>=0.9.1)", "Flask-Migrate (>=2.5.2)", "Flask-Moment (>=0.9.0)", "Flask-PageDown (>=0.2.2)", "flask-redis (>=0.4.0)", "Flask-RESTful (>=0.3.7)", "Flask-Script (>=2.0.6)", "Flask-Session (>=0.3.1)", "Flask-SQLAlchemy (>=2.4.1)", "Flask-SSLify (>=0.1.5)", "enum34 (>=1.1.4) ; python_version < \"3.4\""],
+        "requires_python": ">=3.6",
+        "summary": "DingTalk SDK for Python",
+        "version": "1.0.0"
+    },
+    "package_name" : "zly-resource",
+    "last_serial": 6805743,
+    "releases": {
+        "1.0.0": [{
+            "comment_text": "",
+            "digests": {
+                "md5": "9743ae390fe2b889727474a29c7c53ba",
+                "sha256": "48894bea33b787f22fb4e5fe361df89aed043bdefad9912761f9fa05903e15f3"
+            },
+            "downloads": -1,
+            "filename": "zly_resource_module-1.0.0-py2.py3-none-any.whl",
+            "has_sig": false,
+            "md5_digest": "9743ae390fe2b889727474a29c7c53ba",
+            "packagetype": "bdist_wheel",
+            "python_version": "py2.py3",
+            "requires_python": ">=3.6",
+            "size": 31788,
+            "upload_time": "2020-03-13T12:55:34",
+            "upload_time_iso_8601": "2020-03-13T12:55:34.828260Z",
+            "url": "https://files.pythonhosted.org/packages/c7/7f/47f2a0835697cd1138fd39b656042699180870332bd7c46f77c6d171afa5/zly_resource_module-1.0.0-py2.py3-none-any.whl"
+        }, {
+            "comment_text": "",
+            "digests": {
+                "md5": "934c86e533adbaeb2136fa081a26cb06",
+                "sha256": "9fe0a6cb3a8a191fbb3560e96c29aeb98994954576e1bd5641d791c93db38fb5"
+            },
+            "downloads": -1,
+            "filename": "zly-resource-module-1.0.0.tar.gz",
+            "has_sig": false,
+            "md5_digest": "934c86e533adbaeb2136fa081a26cb06",
+            "packagetype": "sdist",
+            "python_version": "source",
+            "requires_python": ">=3.6",
+            "size": 24790,
+            "upload_time": "2020-03-13T12:55:37",
+            "upload_time_iso_8601": "2020-03-13T12:55:37.089420Z",
+            "url": "https://files.pythonhosted.org/packages/ae/d6/9a084cbd1dee8ff957246bbe818c1c6eb708da4e154c216fc38c8a2298a3/zly-resource-module-1.0.0.tar.gz"
+        }]
+    },
+    "urls": [{
+        "comment_text": "",
+        "digests": {
+            "md5": "9743ae390fe2b889727474a29c7c53ba",
+            "sha256": "48894bea33b787f22fb4e5fe361df89aed043bdefad9912761f9fa05903e15f3"
+        },
+        "downloads": -1,
+        "filename": "zly_resource_module-1.0.0-py2.py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "9743ae390fe2b889727474a29c7c53ba",
+        "packagetype": "bdist_wheel",
+        "python_version": "py2.py3",
+        "requires_python": ">=3.6",
+        "size": 31788,
+        "upload_time": "2020-03-13T12:55:34",
+        "upload_time_iso_8601": "2020-03-13T12:55:34.828260Z",
+        "url": "https://files.pythonhosted.org/packages/c7/7f/47f2a0835697cd1138fd39b656042699180870332bd7c46f77c6d171afa5/zly_resource_module-1.0.0-py2.py3-none-any.whl"
+    }, {
+        "comment_text": "",
+        "digests": {
+            "md5": "934c86e533adbaeb2136fa081a26cb06",
+            "sha256": "9fe0a6cb3a8a191fbb3560e96c29aeb98994954576e1bd5641d791c93db38fb5"
+        },
+        "downloads": -1,
+        "filename": "zly-resource-module-1.0.0.tar.gz",
+        "has_sig": false,
+        "md5_digest": "934c86e533adbaeb2136fa081a26cb06",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 24790,
+        "upload_time": "2020-03-13T12:55:37",
+        "upload_time_iso_8601": "2020-03-13T12:55:37.089420Z",
+        "url": "https://files.pythonhosted.org/packages/ae/d6/9a084cbd1dee8ff957246bbe818c1c6eb708da4e154c216fc38c8a2298a3/zly-resource-module-1.0.0.tar.gz"
+    }]
+}

@@ -55,7 +55,7 @@ def save_new_package(package_name : str):
         p = Path(r"../data/pypi-packages/")#TODO:save it on DB
         fn = package_name + '.json'
         filepath = p / fn
-        with filepath.open("w+", encoding ="utf-8") as f:
+        with filepath.open("x+", encoding ="utf-8") as f:
             f.write(req.text)
 
 def get_package_name_from_url(url : str) -> Optional[str]:
@@ -78,3 +78,5 @@ def task():
                 save_new_package(package_name)
                 print(package_name)
     print(str(packages_added) + " new packages added!")
+
+task()

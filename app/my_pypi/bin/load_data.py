@@ -21,7 +21,7 @@ import my_pypi.data.db_session as db_session
 from my_pypi.utils.num_convert import try_int
 from my_pypi.config import DevelopmentConfig
 
-
+from my_pypi.services import user_service, package_service, general_service
 
 
 def main():
@@ -29,15 +29,15 @@ def main():
     session = db_session.create_session()
     user_count = session.query(User).count()
     session.close()
-    if user_count == 0:
-        file_data = do_load_files()
-        users = find_users(file_data)
+    
+    file_data = do_load_files()
+    users = find_users(file_data)
 
-        db_users = do_user_import(users)
-        do_import_packages(file_data, db_users)
+    db_users = do_user_import(users)
+    do_import_packages(file_data, db_users)
 
-        do_import_languages(file_data)
-        do_import_licenses(file_data)
+    do_import_languages(file_data)
+    do_import_licenses(file_data)
 
     do_summary()
 
@@ -60,7 +60,9 @@ def do_import_languages(file_data: List[dict]):
             parts = c.split(':')
             if len(parts) > 1:
                 text = ' '.join(parts[-2:]).strip().replace('  ', ' ')
-
+            if general_service.get_language_by_id(text):
+                pbar.update(idx)
+                return
             if text not in imported:
                 imported.add(text)
                 session = db_session.create_session()
@@ -84,7 +86,9 @@ def do_import_licenses(file_data: List[dict]):
     for idx, p in enumerate(file_data):
         info = p.get('info')
         license_text = detect_license(info.get('license'))
-
+        if general_service.get_licenses_by_id(license_text):
+            pbar.update(idx)
+            return
         if license_text and license_text not in imported:
             imported.add(license_text)
             session = db_session.create_session()
@@ -120,13 +124,16 @@ def do_user_import(user_lookup: Dict[str, str]) -> Dict[str, User]:
     for idx, (email, name) in enumerate(user_lookup.items()):
         session = db_session.create_session()
         session.expire_on_commit = False
-
-        user = User()
-        user.email = email
-        user.name = name
-        session.add(user)
-
-        session.commit()
+        if session.query(User).filter(User.email == email).first():
+           #user exists
+           pbar.update(idx)
+        else: 
+            user = User()
+            user.email = email
+            user.name = name
+            session.add(user)
+            session.commit()
+        session.close()
         pbar.update(idx)
 
     print()
@@ -166,9 +173,10 @@ def do_load_files() -> List[dict]:
     time.sleep(.1)
 
     file_data = []
-
-    for _, f in enumerate(files):
+    pbar = progressbar.ProgressBar(maxval=len(files)).start()
+    for idx, f in enumerate(files):
         file_data.append(load_file_data(f))
+        pbar.update(idx)
 
     sys.stderr.flush()
     sys.stdout.flush()
@@ -221,6 +229,8 @@ def load_file_data(filename: str) -> dict:
     try:
         with open(filename, 'r', encoding='utf-8') as fin:
             data = json.load(fin)
+            if not data.get('package_name', '').strip():
+                data['package_name'] = os.path.basename(filename).split('.')[0]
     except Exception as x:
         print("ERROR in file: {}, details: {}".format(filename, x), flush=True)
         raise
@@ -235,6 +245,9 @@ def load_package(data: dict, user_lookup: Dict[str, User]):
         p = Package()
         p.id = data.get('package_name', '').strip()
         if not p.id:
+            return
+
+        if package_service.get_package_by_id(p.id):
             return
 
         p.author = info.get('author')
@@ -348,8 +361,7 @@ def make_version_num(version_text):
 
 
 def init_db():
-    db_session.global_init(DevelopmentConfig.SQLALCHEMY_DATABASE_URI, True)#TODO: Make it better
-
+    db_session.global_init(DevelopmentConfig.SQLALCHEMY_DATABASE_URI, False)#TODO: Make it better
 
 def get_file_names(data_path: str) -> List[str]:
     files = []
