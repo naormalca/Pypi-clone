@@ -40,7 +40,7 @@ Currently the project have few simple tests, to run them enter to the container 
 
 Deployment
 ---
-Coming soon
+To fetch and insert all newest pypi packages, you should define a crontab task to execute "app/my_pypi/tasks.py". The script is using pypi API to get the newest packages.
 
 Configuration
 ---

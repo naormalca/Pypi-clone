@@ -24,11 +24,8 @@ from my_pypi.config import DevelopmentConfig
 from my_pypi.services import user_service, package_service, general_service
 
 
-def main():
+def load():
     init_db()
-    session = db_session.create_session()
-    user_count = session.query(User).count()
-    session.close()
     
     file_data = do_load_files()
     users = find_users(file_data)

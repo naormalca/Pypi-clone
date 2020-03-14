@@ -1,3 +1,4 @@
+import sys, os
 from pathlib import Path
 from typing import List, Optional
 import re
@@ -5,6 +6,10 @@ import requests
 import xml.etree.ElementTree as ET
 import pathlib
 
+sys.path.insert(0, os.path.abspath(os.path.join(
+    os.path.dirname(__file__), "..")))
+
+from my_pypi.bin import load_data 
 '''
 1)Schedule a task within some interval
 2)get the data from the RSS - https://pypi.org/rss/packages.xml
@@ -78,5 +83,13 @@ def task():
                 save_new_package(package_name)
                 print(package_name)
     print(str(packages_added) + " new packages added!")
+    return packages_added
 
-task()
+def main():
+    new_packages = task()
+    if new_packages:
+        load_data.load()
+
+if __name__ == '__main__':
+    main()
+
