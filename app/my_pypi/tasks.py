@@ -45,7 +45,8 @@ def collect_urls(data_xml : str) -> List:
 #5)check that they are not already exists
 def is_package_exists(package : str) -> str:
     '''Check if package exists'''
-    p = Path(r"../data/pypi-packages/" + package + '.json')
+    curr_path = Path(__file__).parent.absolute()
+    p = Path(str(curr_path) + r"/../data/pypi-packages/" + package + '.json')
     return p.exists()
 
 #6)make a get request on each of them with https://warehouse.readthedocs.io/api-reference/json/
@@ -57,7 +58,8 @@ def save_new_package(package_name : str):
     req = requests.get(url)
     if req.status_code == 200:
         print("ok")
-        p = Path(r"../data/pypi-packages/")#TODO:save it on DB
+        curr_path = Path(__file__).parent.absolute()
+        p = Path(str(curr_path) + r"/../data/pypi-packages/")#TODO:save it on DB
         fn = package_name + '.json'
         filepath = p / fn
         with filepath.open("x+", encoding ="utf-8") as f:
