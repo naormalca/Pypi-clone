@@ -2,11 +2,13 @@
 {% block main_content %}
 
     <div class="hero">
-        <div class="hero-inner">
-            <h1>Find, install and publish Python packages with the Python Package Index </h1>
-            <input type="text" placeholder=" Search projects" class="form-control">
-        </div>
-
+        <form action="search" method="GET" class="account-form">
+            <div class="hero-inner">
+                <h1>Find, install and publish Python packages with the Python Package Index </h1>
+                <input type="text" placeholder=" Search projects" class="form-control" id="query" name="query">
+                <input type="submit" style="width:0px; height:0px; opacity:0;"/>
+            </div>
+        </form>
         or <a href="#">browse projects</a>
     </div>
 

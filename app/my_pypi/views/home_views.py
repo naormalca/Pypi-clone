@@ -4,6 +4,7 @@ from my_pypi.infrastructure.view_modifiers import response
 import my_pypi.services.package_service as package_service
 import my_pypi.services.user_service as user_service
 from my_pypi.viewmodels.home.index_viewmodel import IndexViewModel
+from my_pypi.viewmodels.home.search_viewmodel import SearchViewModel
 from my_pypi.viewmodels.shared.viewmodelbase import ViewModelBase
 
 blueprint = flask.Blueprint('home', __name__, template_folder='templates')
@@ -21,3 +22,10 @@ def index():
 def about():
     vm = ViewModelBase()
     return vm.to_dict()
+
+@blueprint.route('/search')
+@response(template_file='home/search.html')
+def search():
+    vm = SearchViewModel()
+    return vm.to_dict()
+
