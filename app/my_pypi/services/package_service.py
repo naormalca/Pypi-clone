@@ -1,5 +1,6 @@
 from typing import List, Optional
 import sqlalchemy.orm
+from sqlalchemy import or_
 
 import my_pypi.data.db_session as db_session
 from my_pypi.data.package import Package
@@ -55,16 +56,8 @@ def search_packages_by_keyword(query: str) -> List[Package]:
     session = db_session.create_session()
 
     search = "%{}%".format(query)
-    #give priority to packages with the query string inside the id
+
     packages_found_title = session.query(Package) \
-        .filter(Package.id.like(search)).all()
-    #then the packages with the query inside the description
-    packages_found_desc = session.query(Package) \
-        .filter(Package.description.like(search)).all()
-    print(packages_found_desc)
-    #append the lists without duplicates
-    packages = list(packages_found_title)
-    pkg_title_ids = set(pkg.id for pkg in packages_found_title)
-    packages.extend(pkg for pkg in packages_found_desc if pkg.id not in pkg_title_ids)
+        .filter(or_(Package.id.like(search), Package.description.like(search)))
     
-    return packages
+    return packages_found_title

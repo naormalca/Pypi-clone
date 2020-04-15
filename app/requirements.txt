@@ -1,6 +1,7 @@
 werkzeug
 flask
 sqlalchemy
+sqlalchemy-pagination
 psycopg2-binary
 gunicorn==19.9.0
 

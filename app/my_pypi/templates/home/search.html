@@ -25,9 +25,31 @@
                             </div>
                         </div>
                     {% endfor %}
-
                 </div>
                 <div class="col-md-3"></div>
+                <!--pagination-->
+                {% if pages > 1 %}
+                <div class="container">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <!-- previous page -->
+                            {% if (prv_page_num is defined) %}
+                                <li class="page-item"><a class="page-link" href="/search?query={{ query }}&page={{ prv_page_num }}">Previous</a></li>
+                            {% endif %}
+                            <!-- all page numbers -->
+                            {% for page_num in range(pages) %}
+                            {% if page_num %}
+                                    <li class="page-item"><a class="page-link" href="/search?query={{ query }}&page={{ page_num }}">{{ page_num }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- next page-->
+                            {% if (next_page_num is defined) %}
+                                <li class="page-item"><a class="page-link" href="/search?query={{ query }}&page={{ next_page_num }}">Next</a></li>
+                            {% endif %}
+                        </ul>
+                      </nav>
+                    </div>
+                {% endif %} <!--end of pagination-->
             {% else %}
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -40,6 +62,7 @@
                 <div class="col-md-3"></div>
             </div>
             {% endif %}
+
 
         </div>
     </div>

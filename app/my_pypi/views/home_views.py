@@ -27,5 +27,9 @@ def about():
 @response(template_file='home/search.html')
 def search():
     vm = SearchViewModel()
+    
+    if len(vm.packages) > 0 and vm.page > vm.pages or vm.page < 0:
+        return flask.abort(status=404)
+
     return vm.to_dict()
 
