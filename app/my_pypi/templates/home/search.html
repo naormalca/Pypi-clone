@@ -1,0 +1,70 @@
+{% extends "shared/_layout.html" %}
+{% block main_content %}
+
+    <div class="hero">
+        <form action="search" method="GET" class="account-form">
+            <div class="hero-inner">
+                <h1>Find, install and publish Python packages with the Python Package Index </h1>
+                <input type="text" placeholder=" Search projects" class="form-control" id="query" name="query">
+                <input type="submit" style="width:0px; height:0px; opacity:0;"/>
+            </div>
+        </form>
+        or <a href="#">browse projects</a>
+    </div>
+
+    <div class="container project-list">
+        <div class="row">
+            {% if (packages is defined) and packages %}
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    {% for r in packages %}
+                        <div class="project">
+                            <div class="title">
+                                <a href="/project/{{ r.id }}">{{ r.id }}</a>
+                                <div class="desc">{{ r.summary }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-3"></div>
+                <!--pagination-->
+                {% if pages > 1 %}
+                <div class="container">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <!-- previous page -->
+                            {% if (prv_page_num is defined) %}
+                                <li class="page-item"><a class="page-link" href="/search?query={{ query }}&page={{ prv_page_num }}">Previous</a></li>
+                            {% endif %}
+                            <!-- all page numbers -->
+                            {% for page_num in range(pages) %}
+                            {% if page_num %}
+                                    <li class="page-item"><a class="page-link" href="/search?query={{ query }}&page={{ page_num }}">{{ page_num }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            <!-- next page-->
+                            {% if (next_page_num is defined) %}
+                                <li class="page-item"><a class="page-link" href="/search?query={{ query }}&page={{ next_page_num }}">Next</a></li>
+                            {% endif %}
+                        </ul>
+                      </nav>
+                    </div>
+                {% endif %} <!--end of pagination-->
+            {% else %}
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="project">
+                    <div class="title" style="text-align: center;
+                    vertical-align: middle;">
+                        Packages not found!
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            {% endif %}
+
+
+        </div>
+    </div>
+
+{% endblock %}
