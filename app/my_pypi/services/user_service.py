@@ -1,4 +1,5 @@
 from typing import Optional, List
+import datetime
 
 import my_pypi.data.db_session as db_session
 from my_pypi.data.users import User
@@ -40,7 +41,10 @@ def login_user(email: str, password: str) -> Optional[User]:
     
     if not crypto.verify_hash(user.hashed_password , password):
         return None
-    
+    #update the login time
+    user.last_login = datetime.datetime.now()
+    session.commit()
+
     return user
 
 def get_new_users(limit = 10) -> List[User]:
