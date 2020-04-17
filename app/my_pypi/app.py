@@ -16,7 +16,11 @@ def main():
     register_blueprints()
     app.config.from_object(DevelopmentConfig)
     db_session.global_init(app.config['SQLALCHEMY_DATABASE_URI'], False)
+    #error handling
+    app.register_error_handler(404, page_not_found)
+    #jinja template
     app.jinja_env.filters['regex_replace'] = regex_replace
+    #logger
     app.logger.addHandler(fileHandler)
     app.logger.addHandler(streamHandler)
     app.logger.info("Logging is set up.")
@@ -44,6 +48,10 @@ def before_request():
         'method': request.method,
     }
     app.logger.debug("Handling %(method)s request for %(url)s", context)
+
+def page_not_found(e):
+    app.logger.error("User tried to enter this route: {}".format(flask.request.base_url))
+    return flask.render_template('error/404.html'), 404
 
 if __name__ == '__main__':
     main()
