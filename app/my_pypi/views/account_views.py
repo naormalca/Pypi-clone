@@ -1,5 +1,6 @@
 import flask
 
+from my_pypi.app import app
 from my_pypi.infrastructure.view_modifiers import response
 from my_pypi.services import user_service
 from my_pypi.infrastructure import cookie_auth
@@ -46,6 +47,7 @@ def register_post():
         
     response = flask.redirect('/account')
     cookie_auth.set_auth(response, user.id)
+    app.logger.info("{} has registered".format(user.id))
     return response
 
 
@@ -75,6 +77,7 @@ def login_post():
 
     response = flask.redirect('/account')
     cookie_auth.set_auth(response, user.id)
+    app.logger.info("{} has logged in".format(user.id))
     return response
 
 
@@ -83,6 +86,8 @@ def login_post():
 @blueprint.route('/account/logout')
 def logout():
     response = flask.redirect('/')
+    user_id = cookie_auth.get_user_id_via_cookie(flask.request)
+    app.logger.info("{} has logged out".format(user_id))
     cookie_auth.logout(response)
     return response
 

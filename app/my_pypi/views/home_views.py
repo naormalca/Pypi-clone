@@ -1,5 +1,6 @@
 import flask
 
+from my_pypi.app import app
 from my_pypi.infrastructure.view_modifiers import response
 import my_pypi.services.package_service as package_service
 import my_pypi.services.user_service as user_service
@@ -28,8 +29,9 @@ def about():
 def search():
     vm = SearchViewModel()
     
+    app.logger.info("Search for keyword: \"{}\"".format(vm.query))
     if len(vm.packages) > 0 and vm.page > vm.pages or vm.page < 0:
         return flask.abort(status=404)
-
+    app.logger.info("For keyword \"{}\" found: {} results".format(vm.query, len(vm.packages)))
     return vm.to_dict()
 
