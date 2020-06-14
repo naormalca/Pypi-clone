@@ -1,6 +1,7 @@
 import os
 import sys
 import flask 
+from flask_cors import CORS
 
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, folder)
@@ -11,10 +12,11 @@ from my_pypi.utils.custom_filters import regex_replace
 from my_pypi.log import fileHandler, streamHandler
 
 app = flask.Flask(__name__)
-
+CORS(app)
 def main():
     register_blueprints()
     app.config.from_object(DevelopmentConfig)
+    app.config['CORS_HEADERS'] = 'Content-Type'
     db_session.global_init(app.config['SQLALCHEMY_DATABASE_URI'], False)
     #error handling
     app.register_error_handler(404, page_not_found)
@@ -28,6 +30,7 @@ def main():
     
 
 def register_blueprints():
+    # Views
     from my_pypi.views import home_views
     from my_pypi.views import package_views
     from my_pypi.views import cms_views
@@ -39,6 +42,12 @@ def register_blueprints():
     app.register_blueprint(account_views.blueprint)
     app.register_blueprint(cms_views.blueprint)
     app.register_blueprint(stats_views.blueprint)
+    
+    # API
+    from my_pypi.api import packages
+    from my_pypi.api import auth
+    app.register_blueprint(packages.blueprint, url_prefix='/api/packages')
+    app.register_blueprint(auth.blueprint, url_prefix='/api/auth')
 
 @app.before_request
 def before_request():

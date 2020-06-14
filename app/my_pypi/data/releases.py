@@ -2,7 +2,7 @@ import datetime
 import sqlalchemy
 import sqlalchemy.orm as orm
 from my_pypi.data.modelbase import SqlAlchemyBase
-
+from my_pypi.data.schemas import PackageSchema
 
 class Release(SqlAlchemyBase):
     __tablename__ = 'releases'
@@ -27,3 +27,4 @@ class Release(SqlAlchemyBase):
     @property
     def version_text(self):
         return '{}.{}.{}'.format(self.major_ver, self.minor_ver, self.build_ver)
+
