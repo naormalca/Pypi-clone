@@ -1,6 +1,7 @@
 import flask
 from flask import request
 from flask_cors import cross_origin
+from my_pypi.app import app
 from my_pypi.data import users
 from my_pypi.services import user_service
 from my_pypi.data.users import User
@@ -14,19 +15,18 @@ blueprint = flask.Blueprint(
 @cross_origin()
 def signUp():
     post_data = request.get_json()
-    user = user_service.create_user(post_data.get('name'),
+    user = user_service.create_user(post_data.get('firstName') + " " + post_data.get('lastName'),
                                     post_data.get('email'),
                                     post_data.get('password'))
     try:
         if user:
             auth_token = user.encode_auth_token()
-            print(auth_token)
             if auth_token:
                 response_obj = {
                     'status': 'success',
                     'auth_token': auth_token.decode()
                 }
-                print(response_obj)
+                app.logger.debug(response_obj)
                 return response_obj, 201
 
         else:
@@ -34,14 +34,14 @@ def signUp():
                 'status': 'failed',
                 'error': 'User already exists.'
             }
-            print(response_obj)
+            app.logger.debug(response_obj)
             return response_obj, 202
     except Exception as e:
         response_obj = {
             'status': 'failed',
             'error': e
         }
-        print(response_obj)
+        app.logger.debug(response_obj)
         return response_obj, 401
 
 
@@ -59,7 +59,7 @@ def login():
                     'status': 'success',
                     'auth_token': auth_token.decode()
                 }
-                print(response_obj)
+                app.logger.debug(response_obj)
                 return response_obj, 200
 
         else:
@@ -67,14 +67,14 @@ def login():
                 'status': 'failed',
                 'error': 'The account does not exist or the password is wrong.'
             }
-            print(response_obj)
+            app.logger.debug(response_obj)
             return response_obj, 202
     except Exception as e:
         response_obj = {
             'status': 'failed',
             'error': e
         }
-        print(response_obj)
+        app.logger.debug(response_obj)
         return response_obj, 401
 
 

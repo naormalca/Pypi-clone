@@ -44,10 +44,10 @@ def register_blueprints():
     app.register_blueprint(stats_views.blueprint)
     
     # API
-    from my_pypi.api import packages
-    from my_pypi.api import auth
+    from my_pypi.api import packages, auth, users
     app.register_blueprint(packages.blueprint, url_prefix='/api/packages')
     app.register_blueprint(auth.blueprint, url_prefix='/api/auth')
+    app.register_blueprint(users.blueprint, url_prefix='/api/users')
 
 @app.before_request
 def before_request():

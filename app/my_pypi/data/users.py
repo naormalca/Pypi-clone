@@ -39,7 +39,7 @@ class User(SqlAlchemyBase):
         """
         Decodes the auth token
         :param auth_token:
-        :return: integer|string
+        :return: integer(user_id)
         """
         try:
             payload = jwt.decode(auth_token, 'gogogo') #app.config.get('SECRET_KEY')
