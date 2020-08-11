@@ -3,3 +3,6 @@ env
 *.pyc
 pypi.sqlite
 *.sqlite
+app/data/
+venv/
+*.log

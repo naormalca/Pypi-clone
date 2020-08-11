@@ -15,7 +15,7 @@ def get_users():
     API to reterive users:
     /users?order=logged_at&limit=N => returns the N latest logged users 
     /users?order=created_at&limit=N => returns the N new_users
-    /users?id=N => return users by id 
+    /users?id={userId} => return a single user by id 
     '''
     req_dict = request_dict.create('')
     if req_dict.order:
@@ -46,5 +46,17 @@ def get_users():
             else:
                 response_obj = {'error': 'No users exist'}
                 return response_obj, 201
+    #single user
+    elif req_dict.id:
+        userSchema = UserSchema(only=("name", "last_login", "email"))
+        user = user_service.find_user_by_id(req_dict.id)
+        if not user:
+            print(1)
+            response_obj = {'error': 'User not exists'}
+            return response_obj, 201
+        else:
+            res = userSchema.dumps(user)
+            response_obj = res
+            return response_obj, 200
     response_obj = {'error': ''}
     return response_obj, 201
