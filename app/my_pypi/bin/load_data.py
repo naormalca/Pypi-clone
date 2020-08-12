@@ -358,6 +358,7 @@ def make_version_num(version_text):
 
 
 def init_db():
+    print("DB URI:",DevelopmentConfig.SQLALCHEMY_DATABASE_URI)
     db_session.global_init(DevelopmentConfig.SQLALCHEMY_DATABASE_URI, False)#TODO: Make it better
 
 def get_file_names(data_path: str) -> List[str]:
@@ -370,7 +371,3 @@ def get_file_names(data_path: str) -> List[str]:
 
     files.sort()
     return files
-
-
-if __name__ == '__main__':
-    main()

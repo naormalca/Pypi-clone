@@ -64,5 +64,5 @@ def get_latest_logged(limit = 10) -> List[User]:
         .limit(limit).all()
     
     session.close()
-
+    
     return users

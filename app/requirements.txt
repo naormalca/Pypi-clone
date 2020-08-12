@@ -1,16 +1,21 @@
 werkzeug
 flask
+flask-cors
 sqlalchemy
 sqlalchemy-pagination
 psycopg2-binary
 gunicorn==19.9.0
+marshmallow
+PyJWT
+
+
 
 progressbar
 python-dateutil
 alembic
 passlib
-
 pytest
 pytest-cov
 webtest
 pytest-clarity
+requests

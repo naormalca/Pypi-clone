@@ -2,7 +2,9 @@ version: '3.7'
 
 services:
   my_pypi:
-    build: ./app
+    build:
+      context: ./app
+      network: host
     command: python my_pypi/app.py
     volumes:
       - ./app:/usr/src/app/
