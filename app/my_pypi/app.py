@@ -8,7 +8,6 @@ sys.path.insert(0, folder)
 
 import my_pypi.data.db_session as db_session
 from my_pypi.config import DevelopmentConfig 
-from my_pypi.utils.custom_filters import regex_replace
 from my_pypi.log import fileHandler, streamHandler
 
 app = flask.Flask(__name__)
@@ -20,8 +19,6 @@ def main():
     db_session.global_init(app.config['SQLALCHEMY_DATABASE_URI'], False)
     #error handling
     app.register_error_handler(404, page_not_found)
-    #jinja template
-    app.jinja_env.filters['regex_replace'] = regex_replace
     #logger
     app.logger.addHandler(fileHandler)
     app.logger.addHandler(streamHandler)
@@ -30,19 +27,6 @@ def main():
     
 
 def register_blueprints():
-    # Views
-    from my_pypi.views import home_views
-    from my_pypi.views import package_views
-    from my_pypi.views import cms_views
-    from my_pypi.views import account_views
-    from my_pypi.views import stats_views
-
-    app.register_blueprint(package_views.blueprint)
-    app.register_blueprint(home_views.blueprint)
-    app.register_blueprint(account_views.blueprint)
-    app.register_blueprint(cms_views.blueprint)
-    app.register_blueprint(stats_views.blueprint)
-    
     # API
     from my_pypi.api import packages, auth, users
     app.register_blueprint(packages.blueprint, url_prefix='/api/packages')
