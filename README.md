@@ -6,6 +6,9 @@ Part of the REST API exposed and documented here: https://documenter.getpostman.
 
 Stack: Python, Flask, SqlAlchemy(also alembic for migration) and postgres.
 
+Challenges: Authentication Authorization(JWT), clean code and deployment. 
+
+
 UI Repoistory: https://github.com/naormalca/pypi-react-ui
 
 
