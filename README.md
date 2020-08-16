@@ -42,6 +42,7 @@ Deployment & Scripts
 ---
 In order to load data to the DB:
 > docker-compose exec my_pypi python my_pypi/manage.py load_db
+
 In order to fetch new packages from pypi.org:
 > docker-compose exec my_pypi python my_pypi/manage.py fetch
 
