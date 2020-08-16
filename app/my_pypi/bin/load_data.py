@@ -24,8 +24,8 @@ from my_pypi.config import DevelopmentConfig
 from my_pypi.services import user_service, package_service, general_service
 
 
-def load():
-    init_db()
+def load(drop_all : bool):
+    init_db(drop_all)
     
     file_data = do_load_files()
     users = find_users(file_data)
@@ -37,6 +37,8 @@ def load():
     do_import_licenses(file_data)
 
     do_summary()
+    session = db_session.create_session()
+    session.close_all()
 
 
 def do_import_languages(file_data: List[dict]):
@@ -69,6 +71,7 @@ def do_import_languages(file_data: List[dict]):
                 lang.id = text
                 session.add(lang)
                 session.commit()
+                session.close()
 
         pbar.update(idx)
 
@@ -96,6 +99,7 @@ def do_import_licenses(file_data: List[dict]):
 
             session.add(package_license)
             session.commit()
+            session.close()
 
         pbar.update(idx)
 
@@ -357,9 +361,8 @@ def make_version_num(version_text):
         return major, minor, build
 
 
-def init_db():
-    print("DB URI:",DevelopmentConfig.SQLALCHEMY_DATABASE_URI)
-    db_session.global_init(DevelopmentConfig.SQLALCHEMY_DATABASE_URI, False)#TODO: Make it better
+def init_db(drop_all : bool):
+    db_session.global_init(os.getenv("DATABASE_URL"), drop_all)
 
 def get_file_names(data_path: str) -> List[str]:
     files = []

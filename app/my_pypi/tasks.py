@@ -23,6 +23,7 @@ from my_pypi.bin import load_data
 
 PYPI_URL_NEWEST_PACKAGES='https://pypi.org/rss/packages.xml'
 PYPI_URL_JSON_PACKAGE='https://pypi.org/pypi/PACKAGE/json'
+DATA_FOLDER_PATH=r"/../data/pypi-packages/"
 
 def get_newest_packages_from_pypi() -> Optional[str]: 
     ''' Using the RSS URL'''
@@ -46,7 +47,7 @@ def collect_urls(data_xml : str) -> List:
 def is_package_exists(package : str) -> str:
     '''Check if package exists'''
     curr_path = Path(__file__).parent.absolute()
-    p = Path(str(curr_path) + r"/../data/pypi-packages/" + package + '.json')
+    p = Path(str(curr_path) + DATA_FOLDER_PATH + package + '.json')
     return p.exists()
 
 #6)make a get request on each of them with https://warehouse.readthedocs.io/api-reference/json/
@@ -59,7 +60,7 @@ def save_new_package(package_name : str):
     if req.status_code == 200:
         print("ok")
         curr_path = Path(__file__).parent.absolute()
-        p = Path(str(curr_path) + r"/../data/pypi-packages/")#TODO:save it on DB
+        p = Path(str(curr_path) + DATA_FOLDER_PATH)#TODO:save it on DB
         fn = package_name + '.json'
         filepath = p / fn
         with filepath.open("x+", encoding ="utf-8") as f:
@@ -90,7 +91,7 @@ def task():
 def main():
     new_packages = task()
     if new_packages:
-        load_data.load()
+        load_data.load(False)
 
 if __name__ == '__main__':
     main()

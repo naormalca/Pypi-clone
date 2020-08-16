@@ -45,7 +45,7 @@ def insert_a_package():
 
 
 def init_db():
-    db_session.global_init(DevelopmentConfig.SQLALCHEMY_DATABASE_URI)
+    db_session.global_init(os.environ['FLASK_CONFIG'].SQLALCHEMY_DATABASE_URI)
 
 
 if __name__ == '__main__':

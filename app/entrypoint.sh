@@ -10,8 +10,11 @@ then
 
     echo "PostgreSQL started"
 fi
-#TODO: execute this script only at the first time
-python my_pypi/bin/load_data.py
-python my_pypi/app.py
 
+if [ "$FLASK_ENV" = "development" ]
+then
+    echo "Creating the database tables..."
+    python my_pypi/manage.py load_db
+    echo "Tables created"
+fi
 exec "$@"
