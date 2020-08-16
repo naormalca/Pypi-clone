@@ -1,10 +1,11 @@
 import flask
+import logging
 from flask import request
 from flask_cors import cross_origin
-from my_pypi.app import app
 from my_pypi.data import users
 from my_pypi.services import user_service
 from my_pypi.data.users import User
+
 blueprint = flask.Blueprint(
     'auth_packages', __name__, url_prefix='/api/auth')
 
@@ -26,7 +27,7 @@ def signUp():
                     'status': 'success',
                     'auth_token': auth_token.decode()
                 }
-                app.logger.debug(response_obj)
+                logging.debug(response_obj)
                 return response_obj, 201
 
         else:
@@ -34,14 +35,14 @@ def signUp():
                 'status': 'failed',
                 'error': 'User already exists.'
             }
-            app.logger.debug(response_obj)
+            logging.debug(response_obj)
             return response_obj, 202
     except Exception as e:
         response_obj = {
             'status': 'failed',
             'error': e
         }
-        app.logger.debug(response_obj)
+        logging.debug(response_obj)
         return response_obj, 401
 
 
@@ -59,7 +60,7 @@ def login():
                     'status': 'success',
                     'auth_token': auth_token.decode()
                 }
-                app.logger.debug(response_obj)
+                logging.debug(response_obj)
                 return response_obj, 200
 
         else:
@@ -67,14 +68,14 @@ def login():
                 'status': 'failed',
                 'error': 'The account does not exist or the password is wrong.'
             }
-            app.logger.debug(response_obj)
+            logging.debug(response_obj)
             return response_obj, 202
     except Exception as e:
         response_obj = {
             'status': 'failed',
             'error': e
         }
-        app.logger.debug(response_obj)
+        logging.debug(response_obj)
         return response_obj, 401
 
 
