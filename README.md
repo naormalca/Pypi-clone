@@ -1,9 +1,10 @@
 My-Pypi clone [![Build Status](https://travis-ci.com/naormalca/Pypi-clone.svg?branch=master)](https://travis-ci.com/naormalca/Pypi-clone)
 ===
 This repoistory is a REST API service for my full stack project that clones Pypi.org - [Python Packages Index](https://pypi.org/).
-UI Repoistory: https://github.com/naormalca/pypi-react-ui
+Part of the REST API exposed and documented here: https://documenter.getpostman.com/view/6819906/T1LQfR84?version=latest
 
 Stack: Python, Flask, SqlAlchemy(also alembic for migration) and postgres.
+UI Repoistory: https://github.com/naormalca/pypi-react-ui
 
 
 Backlog
